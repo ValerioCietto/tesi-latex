@@ -1,0 +1,1081 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{paralist}
+\usepackage{graphicx}
+
+\usepackage[a4paper,top=4cm,bottom=4cm,left=4cm,right=3cm]{geometry}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\newcommand{\virgolette}[1]{``#1''}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+    \textbf{\scalebox{1.50}{UNIVERSITÀ DEGLI STUDI DI TORINO}}
+\end{center}
+\begin{center}
+    \textbf{\scalebox{1.20}{Dipartimento di Informatica}}
+\end{center}
+\bigskip
+\begin{center}
+    \scalebox{1.20}{Corso di Laurea in Informatica }
+\end{center}
+\begin{figure}[h]
+    \begin{center}
+       \includegraphics[scale=0.90]{./Sigillo_unito}
+    \end{center}
+\end{figure}
+\begin{center}
+    \scalebox{1.25}{Relazione di stage}
+\end{center}
+\bigskip
+\begin{center}
+    \textbf{\scalebox{1.40}{Un Software per la Diagnosi di Violazioni}}
+    \textbf{\scalebox{1.40}{di Contratti nei Sistemi Multiagente}}
+\end{center}
+\bigskip
+\bigskip
+\begin{flushleft}
+    \scalebox{1.20}{Relatore:}\\
+    \scalebox{1.10}{\textbf{Prof. Ilaria Lombardi}}\\
+    \bigskip
+    \scalebox{1.20}{Correlatore:}\\
+    \scalebox{1.10}{\textbf{Prof. Luca Console}}
+\end{flushleft}
+\begin{flushright}
+    \scalebox{1.20}{Candidato:}\\
+    \scalebox{1.10}{\textbf{Valerio Cietto}}
+\end{flushright}
+\bigskip
+\begin{center}
+    \scalebox{1.20}{Anno Accademico 2015/2016}
+\end{center}
+
+\newpage\null\thispagestyle{empty}\newpage
+
+\thispagestyle{empty}
+\setlength{\parindent}{0pt}
+\textbf{\scalebox{1.30}{Ringraziamenti}}\\
+\\Ringrazio per la disponibilità la prof.ssa Lombardi e il prof. Console, durante il percorso di tesi.
+\\I miei genitori sono stati fondamentali per raggiungere questo traguardo, che mi hanno sostenuto e incoraggiato ad arrivare fino a questo punto.\\
+\\Ringrazio in modo particolare il mio compagno di corso Domenico,  per l'aiuto nel rendere questo progetto più completo.\\
+\\
+\\Un grandissimo ringraziamento va ai miei amici del dipartimento, che mi hanno tenuto su di morale nonostante esami che sembravano impossibili e hanno reso questi anni il mio periodo finora più felice.\\
+\maketitle
+\tableofcontents{}
+
+\fancyhead{}
+\fancyhead[RO,LE]{\slshape \leftmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\setlength{\parindent}{0pt}
+
+\newpage\null\thispagestyle{empty}\newpage
+
+\chapter{Introduzione}
+
+\chapter{Il controllo della postura}
+Cosa è il controllo della postura
+\section{busti}
+
+\newpage
+\section{apparecchi wearable}
+
+perchè i wearable
+\subsection{prodotto commerciale 1}
+
+\subsection{prodotto commerciale 2}
+Sui commitment vengono definite le seguenti operazioni:
+\begin{itemize}
+    \item CREATE(x,c): creazione del commitment c da parte dell'agente \textit{x} nel sistema. In questo caso l'agente \textit{x} è il debitore;
+    \item CANCEL(x,c): revoca del commitment c, eseguita dall'agente \textit{x} (debitore);
+    \item RELEASE(y,c): l'agente debitore del commitment c non si occupa più di soddisfarlo; spetta all'agente \textit{y} soddisfare le sue condizioni;
+    \item ASSIGN(y,z,c): viene riassegnato il ruolo di creditore del commitment c, l'agente \textit{y} viene sostituito con l'agente \textit{z};
+    \item DELEGATE(x,z,c): viene delegato il ruolo di debitore dell'agente \textit{x} del commitment c all'agente \textit{z};
+    \item DISCHARGE(x,c): l'agente \textit{x} (debitore) soddisfa il commitment c.
+\end{itemize}
+\newpage
+Un commitment si dice \textit{attivo} se è stato creato e non ancora soddisfatto.
+La trasformazione dei commitment avviene nel seguente modo:\\
+\\
+\begin{inparaenum}[1)] 
+    \item \scalebox{1.25}{$\frac{C(x,y,p) \wedge p}{discharge(x,C(x,y,p))}$}\\ \\
+    \item \scalebox{1.25}{$\frac{CC(x,y,p,q) \wedge p}{create(x,C(x,y,q)) \wedge discharge(x,CC(x,y,p,q))}$}\\ \\
+    \item \scalebox{1.25}{$\frac{CC(x,y,p,q) \wedge q}{discharge(x,CC(x,y,p,q))}$}
+\end{inparaenum}
+\section{Sfere di commitment}
+Possiamo distinguere due tipi di agenti:
+\begin{itemize}
+    \item agenti visti come individui
+    \item gruppo di agenti, formati da individui o da altri gruppi di agenti che hanno un proprio ruolo sociale. Gli agenti possono cambiare la loro appartenenza ad un gruppo, mantenendo però la loro identità.
+\end{itemize}
+Una \textit{sfera di commitment (SoCom)} è quindi un gruppo di agenti, nel quale ognuno di essi possiede un determinato ruolo e nel quale collaborano tramite i commitment \cite{rif2}.
+\subsection{Struttura}
+Vengono considerate le seguenti operazioni:
+\begin{itemize}
+    \item CREAZIONE di un gruppo;
+    \item ADOZIONE di un ruolo da parte degli agenti;
+    \item RIASSEGNAZIONE dei ruoli tra gli agenti;
+    \item USCITA di un agente da un gruppo.
+\end{itemize}
+\subsection{Commitment espliciti e impliciti}
+I commitemt \textit{espliciti} vengono rappresentati da uno o più agenti, mentre quelli \textit{impliciti} no.\\
+I commitment espliciti caratterizzano la comunicazione tra gli agenti mentre quelli impliciti sono quelli che non vengono elaborati e le loro condizioni sono già note al sistema; essi sono molto importanti perchè rappresentano la conoscenza che gli agenti hanno in comune.
+\newpage
+\section{Specifica dei protocolli}
+I protocolli che troviamo in un sistema specificano come deve avvenire l'interazione tra due o più partecipanti in esso, concentrandosi sulle interazioni e sulla loro semantica \cite{rif1}.
+\subsection{OWL per protocolli}
+OWL-P (Web Ontology Language for Protocols) è un'ontologia utilizzata per specificare i protocolli; può essere visto come uno schema o un linguaggio per essi.\\
+OWL-P viene formalizzato tramite OWL, quest'ultimo è un linguaggio descrittivo, basato sulla logica e il ragionamento; il suo scopo è quello di descrivere le basi di conoscenze, effettuare delle deduzioni su di esse e integrarle con i contenuti delle pagine web e inoltre, permette alle applicazioni di effettuare delle deduzioni sui dati.\\
+Viene impiegato anche il \textit{Semantic Web Rule Language (SWRL)}, che permette di specificare le regole di implicazione (simile al Prolog) su soggetti definiti come istanze OWL-P.
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[scale=0.65]{./OWL-P}
+        \caption{Ontologia OWL-P}
+        \label{OWL-P}
+    \end{center}
+\end{figure}
+\newpage
+La Figura 2.3 mostra gli elementi dell'OWL-P (detti nodi) più importanti e le loro proprietà. Un messaggio (\textit{Message}) è composto da un mittente (\textit{sender}), un destinatario (\textit{receiver}) e può avere un'insieme, detto \textit{Slots}, di parametri. Vengono fornite delle operazioni semantiche per i messaggi, che avranno poi degli effetti sui commitment; per esempio un messaggio può creare, soddisfare o cancellare un commitment. Gli \textit{Slots} possono essere visti come delle variabili, essi vengono definiti quando gli viene assegnato un valore e vengono utilizzati quando il loro valore viene assegnato ad altri \textit{slot}. Ad uno \textit{slot}, in un protocollo, può essere assegnato un valore prodotto da un altro protocollo e quindi essere rappresentato come uno slot esterno (\textit{ExternalSlot}). Uno \textit{slot esterno} non risulta tipato finchè non gli viene assegnato il tipo del valore esterno dal quale risulta vincolato. Al contrario, uno slot nativo (\textit{NativeSlot}) è tipato e dev'essere definito localmente nel protocollo.\\
+Un protocollo risulta quindi dettare alcune regole per governare l'interazione e consulta una \textit{Knowledge Base}.
+Una base di conoscenza è costituita da un insieme di proposizioni; una proposizione in questo contesto può essere vista come un messaggio che è stato spedito o ricevuto. Queste proposizioni sono utilizzate anche per rappresentare gli impegni attivi (commitment) o per specificare dei fatti veri nei domini.\\
+I protocolli vengono quindi specificati tramite una percezione globale del sistema e una base di conoscenza anch'essa riguardante l'intero sistema, questa viene poi associata alla base di conoscenza che ogni soggetto del sistema possiede.
+\subsection{Operazioni semantiche}
+OWL-P definisce le proprietà dei predicati tramite delle operazioni semantiche.\\
+I protocolli vengono specificati tramite la percezione dell'intero sistema e la sua base di conoscenza, le regole vengono eseguite secondo il metodo del \textbf{forward-chaining}.\\
+Il \textbf{forward-chaining} è uno dei metodi utilizzati per il ragionamento quando si usa fare delle \textit{inferenze}, si parte con delle formule atomiche nella base di conoscenza e si applica il \textit{Modus Pones} in avanti, aggiungendo nuove formule atomiche, finchè non è più possibile compiere altre inferenze.
+\newpage
+\begin{figure}[t]
+    \begin{center}
+        \includegraphics[scale=0.50]{./agentArchitecture}
+        \caption{Architettura dell'agente: protocollo e politica}
+        \label{agentArchitecture}
+    \end{center}
+\end{figure}
+\begin{figure}[h]
+    \includegraphics[scale=0.42]{./operationalSemantics}
+    \caption{Operazioni semantiche sui ruoli di un protocollo}
+    \label{operationSemantics}
+\end{figure}
+La Figura 2.4 mostra come i predicati nella tabella in Figura 2.5, lavorano.\\
+Quando viene ricevuto un messaggio, tramite le regole del protocollo, viene controllato se può essere accettato; se così fosse, viene asserita una proposizione nella base di conoscenza e viene opzionalmente creato un commitment in base alla semantica del messaggio. L'aggiornamento della base di conoscenza può portare all'attivazione di altre regole del protocollo con il conseguente invio di altri messaggi e l'asserimento di nuove proposizioni con la creazione dei commitment corrispondenti (se presenti).\\
+Nel nostro lavoro le regole di protocollo si presenteranno nel seguente modo:
+\begin{center}
+    \textit{hap(event(exec(e(x, y, $\chi_1,\dots,\chi_n$))),t)}
+\end{center}
+dove ogni evento sarà rappresentato come un messaggio \textbf{exec} tra un agente x, il mittente, e un agente y, il ricevitore. La descrizione dell'evento verrà rappresentata da \textbf{e}, ($\chi_1,\dots,\chi_n$) saranno i parametri associati ad \textbf{e}. Il tempo in cui si verificherà l'evento verrà rappresentato da \textbf{t}.
+\newpage
+\subsection{Protocollo composto}
+Diversi protocolli possono essere utilizzati in un unico sistema, nel quale ognuno di essi ha il proprio obiettivo.
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[scale=0.63]{./compositeProtocol}
+        \caption{OWL-P composizione di classi e proprietà di protocolli diversi}
+        \label{compositeProtocol}
+    \end{center}
+\end{figure}
+\\La Figura 2.6 descrive le entità e le proprietà dell'OWL-P in una composizione di protocolli. Un \textit{Composite Protocol} è un'aggregazione delle componenti di diversi protocolli e viene definito dal \textit{Composition Profile}; questo descrive la combinazione di due o più protocolli per mezzo di \textit{Composition Axiom}; quest'ultimi a loro volta definiscono le relazioni tra i protocolli così combinati.\\
+Le operazioni semantiche di un assioma specificano il modo con il quale le relazioni hanno degli effetti sul protocollo così composto.\\
+Un composition axiom dev'essere specificato dal progettista e, se necessario, può definirne più sottoclassi , con le loro proprietà e operazioni semantiche.\\
+Il \textit{Role Definition} si occupa di definire gli assiomi che riguardano un singolo agente che copre ruoli differenti nei protocolli che compongono quello principale, definendo un nome da dare al ruolo per unificare il tutto.
+\newpage
+Ad esempio, nel seguente assioma:\\ \\
+\texttt{roleDefinition(define:Purchase.customer, unify:Order.buyer,\\unify;Shipping.receiver, unify:Payment.payer)}\\
+\\si afferma che i ruoli di un agente che effettua un ordine di un oggetto, un pagamento e che lo riceve sono interpretati dallo stesso che interpreterà il ruolo di un cliente nel protocollo di acquisto. Nell'OWL-P, le istanze dei ruoli che sono stati unificati vengono scartate, e viene aggiunta un'unica istanza che definisce la loro  unificazione.\\
+Il \textit{Data Flow} mette in relazione gli slot che sono definiti da protocolli diversi tramite l'ExternalSlot.\\
+Una \textit{Implication axiom} specifica che una proposizione X in un protocollo implica una proposizione Y in un altro protocollo.\\
+L'\textit{Event Order} specifica un ordinamento tra i messaggi dei protocolli dei componenti.
+\subsection{Definizione di protocollo}
+Dopo quanto detto in precedenza, si può parlare di protocollo \textbf{chiuso} e protocollo \textbf{aperto}.\\
+Un protocollo è \textit{chiuso} se risulta non avere slots esterni, e tutti i commitment creati al suo interno possono essere soddisfatti dai propri messaggi.\\
+Un protocollo si dice invece \textit{aperto}, quando ha bisogno dell'intervento di altri protocolli per soddisfare i suoi commitment.
+\newpage
+\section{Processi}
+Un \textbf{processo} è l'insieme di tutti i singoli processi locali degli agenti che partecipano nel sistema.\\
+Per costruire i local process dei singoli agenti bisogna derivare il loro \textit{role skeleton}, accompagnato dalle \textit{policies}.
+\subsection{Role skeleton}
+Esso descrive il protocollo tramite la visione di ciò che riguarda solamente il ruolo stesso nel sistema. Lo stato del protocollo cambia quando un messaggio viene spedito o ricevuto dal suo ruolo.
+Si dice che un role skeleton è \textit{concreto} se tutti i suoi slots nativi vengono definiti, altrimenti risulta essere \textit{astratto}.\\
+Un local process è quindi un role skeleton quando esso risulta essere concreto e viene derivato da un protocollo chiuso.
+\subsection{Policies}
+Alcune delle regole dei protocolli possono essere astratte, il che significa che i valori di alcuni degli slot nativi devono essere prodotti dalla logica di business del ruolo. Questa situazione viene affrontata integrando il \textit{role skeleton} con delle \textit{policy rule} che possono servire quando l'agente deve prendere una decisione e rispondere.
+\chapter{Diagnosi Model-Based}
+\section{Introduzione}
+Nella teoria e progettazione di un sistema di ragionamento diagnostico si trovano due differenti tipologie di approccio \cite{rif3}.\\
+Nel primo, si ha una descrizione del sistema accompagnata dall'osservazione del suo comportamento; se questa osservazione va in conflitto con l'effettivo comportamento che il sistema deve tenere, ci si trova davanti a un cosiddetto \textit{problema diagnostico}.
+Tramite questo problema diagnostico si va a determinare quali componenti del sistema, che assumiamo si siano comportate in modo anomalo, hanno portanto ad una discrepanza tra il sistema osservato e il corretto comportamento che dovevano seguire.\\
+Per risolvere questo problema diagnostico tramite la teoria Model-Based, l'unica informazione disponibile è la descrizione del sistema, cioè la sua struttura, insieme all'osservazione del suo comportamento.\\
+Il secondo approccio invece può essere visto come un approccio a livello di esperienza, dove le informazioni euristiche sono fondamentali. Il sistema quindi viene codificato in base a delle statistiche e alle esperienze che l'uomo ha nel campo diagnostico, considerando il suo livello di esperienza nel particolare dominio in cui si trova a lavorare.\\
+Come vedremo più in dettaglio nella sezione 5.3, con il nostro lavoro ci baseremo su un approccio alla diagnosi che non coincide né con il primo né con il secondo degli approcci menzionati da Reiter. Tuttavia, utilizzeremo l'approccio Model-Based per simulare l'esecuzione del sistema, e speculeremo sulla possibilità di utilizzare tale approccio anche per la diagnosi.
+\newpage
+\section{Formulazione del problema}
+\subsection{Sistema}
+Un sistema è una coppia (SD,COMPONENTS) dove:\\
+\\\begin{inparaenum}[1)]
+    \item SD è la descrizione del sistema, una serie di clausole del primo-ordine;\\
+    \item COMPONENTS sono le componenti del sistema, definite tramite delle costanti.
+\end{inparaenum}\\
+\\Nella descrizione del sistema viene quindi utilizzata la \textit{logica del primo ordine} che, a differenza della logica proposizionale, nella quale si dà per scontanto che i fatti nel mondo possono trovarsi solamente in due stati: vero o falso, prende in considerazione ulteriori aspetti. In particolare, tiene in considerazione che gli oggetti nel mondo sono legati da delle relazioni che possono essere o meno verificate.\\
+Inoltre viene riportato il \textit{normale} comportamento che dovrebbero seguire le componenti del sistema. La descrizione del sistema riconosce come predicato unario AB(-), interpretato come comportamento \virgolette{anormale}.\\
+\\\textbf{Esempio.} La Figura 3.1 illustra il circuito che calcola la somma binaria.\\
+Questo sistema può essere rappresentato dalle componenti \{$A_1,A_2,X_1,X_2,O_1$\} e dalla seguente descrizione:\\
+\\
+$ANDG(x)\wedge \neg{AB(x)}\supset out(x) = and(in1(x),in2(x))$,\\
+$XORG(x)\wedge \neg{AB(x)}\supset out(x) = xor(in1(x),in2(x))$,\\
+$ORG(x)\wedge \neg{AB(x)}\supset out(x) = or(in1(x),in2(x))$,\\
+\\ $ANDG(A_1),\ \ \ \ \ ANDG(A_2),$\\
+$XORG(X_1),\ \ \ \ \ XORG(X_2),\ \ \ \ \ ORG(O_1),$\\
+\\$out(X_1) = in2(A_2),$\\
+$out(X_1) = in1(X_2),$\\
+$out(A_2) = in1(O_1),$\\
+$in1(A_2) = in2(X_2),$\\
+$in1(X_1) = in1(A_1),$\\
+$in2(X_1) = in2(A_1),$\\
+$out(A_1) = in2(O_1).$\\
+\newpage
+Inoltre, nella descrizione del sistema sono contenuti gli assiomi che specificano i valori binari di ingresso del circuito:\\
+\\
+$in1(X_1) = 0 \vee in1(X_1) = 1$\\
+$in2(X_1) = 0 \vee in2(X_1) = 1$\\
+$in1(A_1) = 0 \vee in1(A_1) = 1$
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[scale=0.63]{./fullAdder}
+        \caption{Circuito full adder: A1 e A2 sono le porte AND, X1 e X2 sono le porte OR-esclusivo, O1 è la porta OR.}
+        \label{circuito fulladder}
+    \end{center}
+\end{figure}
+\subsection{Osservazioni del sistema}
+Per poter procedere con una diagnosi, bisogna poter \textit{osservare} il sistema, senza le osservazioni non si può determinare se qualcosa è andato male durante l'esecuzione.
+\\Un'\textit{osservazione} del sistema è una sequenza finita di clausole del primo-ordine. Bisogna quindi scrivere (SD,COMPONENTS,OBS) per il sistema (SD, COMPONENTS), dove OBS è l'insieme delle osservazioni fatte.
+\newpage
+\textbf{Esempio} (continuazione) Supponiamo che, dati in ingresso gli input 1, 0, 1, si ottiene come output 1, 0.\\
+Questa osservazione può essere formalizzata nel seguente modo:\\
+\\
+$in1(X_1) = 1$,\\
+$in2(X_1) = 0$,\\
+$in1(A_2) = 1$,\\
+$out(X_2) = 1$,\\
+$out(O_1) = 0$.\\
+\\
+Si può notare che questa osservazione indica che il circuito è difettoso; entrambe le uscite del circuito sono sbagliate per gli ingressi dati.
+\subsection{Diagnosi}
+Supponiamo di aver determinato che un sistema (SD, \{\textit{$c_1,\dots,c_n$}\}) è fallito, tramite OBS delle osservazioni, in contrasto con ciò che la descrizione del sistema prevede che dovrebbe accadere, se tutte le sue componenti si comportano in modo corretto. La notazione \{$\neg{AB(c_1)},\dots,\neg{AB(c_n)}$\} rappresenta il comportamento corretto delle componenti del sistema, così come SD $\cup$  \{$\neg{AB(c_1)},...,\neg{AB(c_n)}$\} rappresenta il comportamento del sistema con tutte tutte le sue componenti che lavorano correttamente.\\
+Da qui si possono aggiungere i fatti osservati, formalizzando il tutto nel seguente modo:
+\begin{center}
+SD $\cup$ \{$\neg{AB(c_1)},\dots,\neg{AB(c_n)}$\} $\cup$ OBS
+\end{center}
+facendo risultare un'inconsistenza.\\
+Una diagnosi è quindi una \textit{congettura} su una parte delle componenti che sono fallite (che risultano ABnormal) ed il resto del sistema; detto questo ci si può condurre al \textbf{Principio di Parsimonia}, che afferma quanto detto:
+\begin{center}
+    \textit{una diagnosi è una congettura su un set minimo di componenti fallite.}
+\end{center}
+\newpage
+Tramite questo principio si può arrivare alla seguente definizione:\\
+\\Una diagnosi per (SD,COMPONENTS,OBS) è un insieme minimo\\$\Delta \subseteq COMPONENTS$ tale che:
+\begin{center}
+SD $\cup\ OBS \cup \{AB(c)\ |\ c \in \Delta\} \cup \{\neg AB(c)\ |\ c \in COMPONENTS - \Delta$\}
+\end{center}
+è consistente.\\
+\\In altre parole, una diagnosi viene eseguita con un piccolo gruppo di componenti dove:
+\begin{itemize}
+    \item[-] quelle \{$AB(c)\ |\ c \in \Delta$\} non si comportano come dovrebbero;
+    \item[-] quelle \{$\neg AB(c)\ |\ c \in COMPONENTS - \Delta$\} sono tutte le altre componenti che si comportano correttamente;
+\end{itemize}
+essa risulta così coerente con la descrizione del sistema e l'osservazione fatta.\\
+\\\textbf{Esempio} (continuazione) Per quanto riguarda il nostro caso in esame, ci sono tre diagnosi $\{X_1\}, \{X_2, O_1\}, \{X_2, A_2\}$.
+\chapter{Sistema diagnostico}
+\section{Introduzione}
+Una ventina di anni fa, Kowalski e Sergot \cite{rif7} introdussero l'\textit{Event Calculus (EC)}, un framework utilizzato per la risoluzione di eventi che arrivano in un intervallo di tempo.\\
+L'implementazione della logica dell'\textit{EC} si basava sulla ricerca backward, sul ragionamento goal-oriented, e veniva applicato in due diversi contesti di ragionamento:
+\begin{itemize}
+    \item[-] verifica deduttiva, per verificare se un dato \textit{fluente} è presente nella narrativa (set di eventi);
+    \item[-] pianificazione abduttiva, per generare un possibile resoconto dei fatti che soddisfano i requisiti.
+\end{itemize}
+Esistono diversi approcci logici \textit{EC}; nella maggior parte di questi, il ragionamento sugli eventi accaduti avviene prima o dopo l'esecuzione del sistema; queste versioni non vanno bene quando si vuole che il ragionamento venga svolto durante l'esecuzione, ossia negli ambienti dinamici, caratterizzati da una narrativa che si evolve nel tempo. Si trovano molti sistemi che richiedono un ragionamento a run-time, con lo scopo di monitorare la loro esecuzione; ad esempio, il Business Process Management richiede un supporto decisionale operativo continuo durante l'esecuzione di un processo di business, per fornire i servizi di controllo e di verifica nei riguardi dei lavoratori coinvolti nell'esecuzione di un processo, in modo che siano conformi al regolamento e alle norme specificate.\\
+Le tracce di esecuzione sono generate dalle entità che interagiscono in modo autonomo.
+Il monitoraggio è pertanto della massima importanza, per fornire una valutazione costante, aggiornandosi sullo stato raggiunto delle cose, e per rilevare tempestivamente situazioni indesiderate o eccezionali; inoltre richiede la capacità di reagire al verificarsi di nuovi eventi.\\
+Di implementazioni \textbf{reattive} per l'\textit{EC} ne sono state proposte, una di queste utilizza \textit{EC} per monitorare il comportamento dei soggetti che interagiscono e segnala i diversi tipi di violazioni che occorrono durante l'esecuzione. Il ragionamento viene attuato mediante un algoritmo di elaborazione di evento ad-hoc, che recupera gli eventi aggiornando lo stato dei fluenti coinvolti nella verifica.\\
+Basandosi sul lavoro fatto da Kowalski e Sandri, viene presa una parte del framework \textit{EC}, scelto un linguaggio ALP (Abductive Logic Programming) \cite{rif8} e una procedura chiamata SCIFF, ottenendo una nuova versione per il calcolo degli eventi chiamata \textit{REC, Reactive Event Calculus}.\\
+REC si ispira anche al lavoro di Chittaro e Montanari \\\cite{rif9}; essi hanno proposto un meccanismo, chiamato \textit{Cache Event Calculus (CEC}), per memorizzare nella cache il risultato del processo di inferenza ogni volta che la base di conoscenza viene aggiornata da un nuovo evento; REC si basa sulla stessa idea, il meccanismo di cache è realizzato tramite la procedura SCIFF, che supporta l'acquisizione dinamica e la gestione delle occorrenze degli eventi.
+\newpage
+\section{Event Calculus}
+\textit{EC} viene utilizzato come framework per la rappresentazione e risoluzione degli eventi e degli effetti che questi hanno sul sistema \cite{rif7}; troviamo come concetti fondamentali quello di \textbf{\textit{evento}}, che indica l'accadere di un avvenimento nel tempo, e di \textbf{\textit{fluenti}} che valgono in quell'intervallo di tempo.\\
+I fluenti vengono gestiti tramite gli eventi; data una traccia di eventi, l'EC, assieme ai suoi assiomi, specifica quali fluenti valgono in ogni instante di tempo.\\
+Gli assiomi possono essere definiti in diversi modi; una possibile rappresentazione è la seguente, dove \textit{P} indica i fluenti, \textit{E} indica l'evento, \textit{T} rappresenta gli istanti di tempo:\\
+\\
+    \scalebox{0.9}{(1) $holds\_at(P,T) \leftarrow initiates(E,P,T_{start})\wedge T_{start} < T \wedge \neg{clipped(T_{start},P,T)}$.}\\ \\
+    \scalebox{0.9}{(2) $clipped(T_1,P,T_3) \leftarrow terminates(E,P,T_2)\wedge T_1 < T_2\wedge T_2 < T_3$.}\\ \\
+    \scalebox{0.9}{(3) $initiates(E,P,T) \leftarrow happens\_at(E,T)$}\\\scalebox{0.9}{$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \wedge [\neg{}]holds\_at(P_1,T) \wedge \dots \wedge [\neg{}]holds\_at(P_N,T)$.}\\ \\
+    \scalebox{0.9}{(4) $terminates(E,P,T) \leftarrow happens\_at(E,T)$}\\\scalebox{0.9}{$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \wedge [\neg{}]holds\_at(P_1,T)\wedge \dots \wedge [\neg{}]holds\_at(P_N,T)$.}\\
+\\
+I primi due assiomi formalizzano le relazioni tra gli eventi e i fluenti, nello specifico, l'assioma (1) dice che un fluente P è vero al tempo T se e solo se c'è stato un evento, prima del tempo T, che ha dato inizio al fluente e questo non è stato interrotto nell'intervallo [$T_{start}$,T]. L'assioma (2) formalizza il significato di fluente \virgolette{interrotto}: un fluente è stato interrotto se all'interno di un determinato intervallo di tempo un evento l'ha fatto terminare.
+\\Gli ultimi due invece definiscono che un certo fluente P viene avviato/terminato in un istante di tempo T, se un evento E accade nello stesso tempo T e devono essere veri zero o più fluenti $P_i$ (o le loro negazioni).
+\newpage
+Come detto nell'introduzione, questa formulazione così proposta non è adatta per gli ambienti dinamici, in cui la narrativa del sistema si evolve nel tempo: ogni volta che si verifica un nuovo evento, il ragionamento deve essere riavviato da zero. Per superare questo problema, Chittaro e Montanari hanno proposto una formulazione diversa, che memorizza nella cache i processi di inferenza che portano all'aggiornamento della base di conoscenza, quando un nuovo evento occorre.\\
+Il \textit{Cached Event Calculus (CEC)} calcola \textbf{l'intervallo massimo di validità di un fluente (MVIs)}, l'insieme di intervalli di validità possono essere rivisti, se arrivano nuovi eventi.
+\\L'ontologia completa di CEC è riassunta nella Figura 4.1.
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[scale=0.4]{./ontologiaCEC}
+        \caption{Ontologia del CEC con MVIs}
+        \label{CEC}
+    \end{center}
+\end{figure}
+\section{ALP: Abductive Logic Programming}
+Abductive Logic Programming è una rappresentazione della conoscenza ad alto livello, che permette di risolvere i problemi in modo dichiarativo, basato su di un ragionamento abduttivo. Viene estesa la normale programmazione logica, consentendo ad alcuni predicati di essere definiti in modo incompleto, dichiarandoli come predicati abducibili.\\
+La risoluzione dei problemi viene effettuata derivando ipotesi su questi predicati abducibili (abductive hypotheses); questi problemi possono riguardare sia osservazioni che hanno bisogno di essere spiegate sia obiettivi da raggiungere.
+\newpage
+\subsection{Ragionamento abduttivo}
+Ragionamento attraverso il quale, partendo da alcuni fatti che si vogliono spiegare (premesse), si cerca
+di individuare una possibile ipotesi che li spieghi (conclusione).\\ \\
+Esempio.
+\begin{itemize}
+    \item \textit{Risultato} Questi fagioli sono bianchi
+    \item \textit{Regola} Tutti i fagioli di questo sacchetto sono bianchi
+    \item \textit{Caso} Questi fagioli vengono da questo sacchetto
+\end{itemize}
+Il \textit{Caso} è dato da (\textit{Risultato} + \textit{Regola}).\\
+Questo schema segue la seguente logica
+\begin{center}
+    \textit{se A implica B, ed è dato B, allora A è vera (forse)}
+\end{center}
+L'abduzione dev'essere confermata per via empirica. La conferma non potrà mai essere assoluta, ma solo probabilistica: si può dire di aver svolto un'abduzione corretta se la Regola che si è scelta, per spiegare il Risultato, riceve la conferma, tramite la probabilità, che sia quella giusta se non vi sono altre Regole che spiegano altrettanto bene i fatti osservati.\\
+Questo ragionamento è molto diverso dalle altre due forme di ragionamento più utilizzate: quello \textit{deduttivo} e quello \textit{induttivo}.\\
+\\Il \textbf{ragionamento deduttivo} segue la forma per cui 
+\begin{center}
+    \textit{se A implica B, ed è dato A, allora ne consegue che B}
+\end{center}
+la conclusione si deduce quindi dalle premesse.\\ \\
+Esempio.
+\begin{itemize}
+    \item \textit{Regola} Tutti i fagioli di questo sacchetto sono bianchi
+    \item \textit{Caso} Questi fagioli vengono da questo sacchetto
+    \item \textit{Risultato} Questi fagioli sono bianchi
+\end{itemize}
+Il \textit{Risultato} è dato da (\textit{Regola} + \textit{Caso}).
+\newpage
+Il \textbf{ragionamento induttivo} tenta di prescrivere una regola alla realtà. Dal punto di vista logico afferma che
+\begin{center}
+    \textit{se A implica B allora dato B ne consegue A.}
+\end{center}
+consentendo di ipotizzare una regola a partire da un caso e da un risultato, si basa sull'assunzione di un fenomeno che continuerà a manifestarsi anche in futuro.\\ \\
+Esempio.
+\begin{itemize}
+    \item \textit{Caso} Questi fagioli vengono da questo sacchetto
+    \item \textit{Risultato} Questi fagioli sono bianchi
+    \item \textit{Regola} Tutti i fagioli di questo sacchetto sono bianchi
+\end{itemize}
+La \textit{Regola} è data da (\textit{Caso} + \textit{Risultato}).
+\subsection{Sintassi}
+L'Abductive Logic Program è composto da tre componenti $\langle P,A,IC \rangle$ dove:
+\begin{itemize}
+    \item[-]P è un programma logico scritto in Logic Programming;
+    \item[-]A è l'insieme dei predicati, dichiarati come abducibili;
+    \item[-]IC, vincoli di integrità, è un insieme di formule del primo ordine.
+\end{itemize}
+\subsection{Risoluzione dei problemi}
+Le clausole in P definiscono un insieme di predicati non abducibili e attraverso questi essi forniscono una descrizione (o modello) del dominio del problema. I vincoli in IC specificano le proprietà generali del dominio, che devono essere rispettati in qualsiasi soluzione del nostro problema.
+\\Un problema G, che esprime o un'osservazione che ha bisogno di essere esaminata o un obiettivo che si desidera raggiungere, è rappresentato da una congiunzione di letterali positivi e negativi. Tali problemi sono risolti calcolando una \textit{spiegazione abduttiva} di G.\\
+Una spiegazione abduttiva di un problema G è un insieme positivo (e anche negativo) di istanze dei predicati abducibili, queste vengono aggiunte al programma logico P, ottenendo le definizioni complete o parziali dei predicati abducibili.\\
+Il calcolo in ALP combina il ragionamento bakcward di un normale problema della programmazione logica, con una sorta di integrity checking per dimostrare che le spiegazioni abduttive soddisfano i vincoli di integrità.
+\subsection{Esempio di calcolo ALP}
+In questo esempio viene illustrato il concetto di spiegazione abduttiva in ALP e la sua relazione alla soluzione dei problemi.\\
+Si consideri il programma di logica abduttiva la cui descrizione del dominio è data da:
+\begin{itemize}
+    \item[-]L'erba è bagnata se ha piovuto
+    \item[-]L'erba è bagnata se l'irrigatore era acceso
+    \item[-]Il sole splendeva
+\end{itemize}
+insieme con i due predicati abducibili:
+\begin{itemize}
+    \item[-] \virgolette{ha piovuto}
+    \item[-] \virgolette{l'irrigatore era acceso}
+\end{itemize}
+ed i vincoli di integrità:
+\begin{itemize}
+    \item[-]non pioveva
+    \item[-]c'era il sole
+\end{itemize}
+L'osservazione che l'erba è bagnata ha due possibili spiegazioni, \virgolette{ha piovuto} o \virgolette{l'irrigatore era acceso}, che comportano l'osservazione. Si può vedere che solo il secondo ha una potenziale spiegazione, \virgolette{l'irrigatore era acceso}, soddisfa il vincolo di integrità.
+\subsection{Semantica}
+La spiegazione abduttiva può essere spiegata tramite la seguente semantica formale: dato un programma logico abduttivo, $\langle \textbf{P,A,IC} \rangle$, una spiegazione abduttiva per un problema \textbf{G} è un insieme $\Delta$ di atomi su predicati abducibili, tali che:
+\begin{itemize}
+    \item[-]$P \cup \Delta \models G$
+    \item[-]$P \cup \Delta \models IC$
+    \item[-]$P \cup \Delta$ è coerente
+\end{itemize}
+\newpage
+\section{Framework SCIFF}
+Il monitoraggio a runtime, ossia la verifica del comportamento dei soggetti che interagiscono durante l'esecuzione, richiede una versione dell'EC \virgolette{reattiva}, in grado di gestire una narrativa che cresce dinamicamente, di reagire al verificarsi di nuovi eventi e di inferire una nuova base di conoscenza. Per questo motivo, si ricorre al linguaggio SCIFF.
+\subsection{Linguaggio SCIFF}
+Il linguaggio SCIFF è un'estensione dell'IFF di Fung e Kowalski, che riguarda la programmazione logica abduttiva \cite{rif10}.\\
+Ci sono due nozioni fondamentali: quella di evento (rappresentata con \textbf{H}) e le aspettative (modellate con \textbf{E/EN}).\\
+\textbf{H}(\textit{Ev,T}) indica che un evento \textit{Ev} è accaduto al tempo \textit{T}, mentre con \textbf{E}(\textit{Ev,T}) e \textbf{EN}(\textit{Ev,T}) si indica, nel primo caso, che in un certo tempo T (quantificato esistenzialmente) ci si aspetta che arrivi l'evento Ev; nel secondo caso invece ci si aspetta che nessun evento Ev avvenga nello stesso dominio di T (quantificato universalmente).\\
+Una specifica in linguaggio SCIFF è composta da una base di conoscenza \textit{KB}, un set di vincoli \textit{IC} e da un goal. La \textit{KB} è composta da regole backward \textit{$head \leftarrow body$}, mentre i vincoli IC seguono l'implicazione forward \textit{$body \rightarrow head$}. I vincoli vengono interpretati in maniera reattiva: quando il corpo di un vincolo diventa vero (per l'arrivo di un evento per esempio) le aspettative presenti nella testa della regola sono generate abduttivamente.\\
+Ad esempio, $\textbf{H}(\textit{a,T}) \rightarrow \textbf{EN}(\textit{b,T}')$ definisce la relazione tra gli eventi \textit{a} e \textit{b}, ossia dice che se l'evento \textit{a} arriva al tempo \textit{T}, \textit{b} non dovrebbe occorrere in qualsiasi momento \textit{T}'; $\textbf{H}(a,T) \rightarrow \textbf{E}(b,T') \wedge T' \le T + 300$ dice che se l'evento \textit{a} arriva, un evento \textit{b} dovrebbe occorrere entro e non oltre 300 unità di tempo dopo che è arrivato \textit{a}.
+\newpage
+\subsection{Semantica dichiarativa}
+La semantica dichiarativa di SCIFF è data interpretando le sue specifiche tramite l'Abductive Logic Programming (ALP). In particolare, una specifica SCIFF è un Abductive Logic Program \textit{$\langle KB,A,IC \rangle$} dove:
+\begin{itemize}
+ \item \textit{KB} è la base di conoscenza, composta da un set di clausole
+ \item $A \supseteq\{\textbf{E}/2,\textbf{EN}/2,\textbf{H}/2\}$ è un set di predicati abducibili
+ \item \textit{IC} è l'insieme dei vincoli di integrità
+\end{itemize}
+La semantica dichiarativa di SCIFF parte dalla semantica dell'ALP introducendo la nozione di conformità di una traccia di esecuzione con le aspettative generate. Con il termine istanza del sistema, si intende una specifica traccia di esecuzione. Una traccia di esecuzione raccoglie l'insieme di eventi verificatisi finora (cioè, la narrazione parziale).\\
+\\\textbf{Traccia di esecuzione}\\
+Una traccia di esecuzione \textsl{T} in SCIFF è un set di atomi della forma \textbf{H}(\textit{e,t}).\\
+\\\textbf{Istanza}\\
+Data una specifica SCIFF \textsl{S} ed una traccia di esecuzione \textsl{T}, \textsl{$S_T$}=$\langle S,T\rangle$ è una \textsl{T}-instance di \textsl{S}.\\
+\\La semantica dichiarativa stabilisce che ogni aspettativa positiva deve essere soddisfatta da un corrispondente evento, mentre le aspettative negative non devono avere nessun evento corrispondente nella traccia di esecuzione.
+\newpage
+\begin{figure}[h]
+    \bigskip
+    \begin{center}
+        \includegraphics[scale=0.9]{./eventsREC}
+        \caption{Evento in REC}
+        \label{event}
+    \end{center}
+\bigskip
+\bigskip
+    \begin{center}
+        \includegraphics[scale=0.8]{./REC}
+        \caption{Panoramica di REC}
+        \label{REC}
+    \end{center}
+\end{figure}
+\newpage
+\section{Reactive Event Calculus}
+La seguente specifica in linguaggio SCIFF dell'EC si ispira al lavoro di Chittaro e Montanari sul CEC e alla loro idea di MVIs. Gli eventi ed i fluenti sono dei termini e i tempi sono variabili intere o reali, 0 è il tempo iniziale. REC utilizza il meccanismo abduttivo, la sua specifica è composta da due parti:
+\begin{itemize}
+\item una parte generale, composta dai vincoli di integrità e dalle clausole della base di conoscenza, che formalizzano l'ontologia dell'EC, definendo la semantica per MVIs e le relazioni tra gli eventi che occorrono e MVIs;
+\item una parte che specifica le relazioni nel dominio; sono delle clausole che vengono aggiunte per completare la conoscenza del dominio.
+\end{itemize}
+Nella Figura 4.2 si possono vedere due eventi interni (denotati con "declip/clip") che modellano l'avvio/terminazione, rispettivamente, del fluente.
+Nello specifico, si vede come la \textit{spiegazione abduttiva} in REC contiene MVI; gli eventi interni declip/clip delimitano gli estremi dell'intervallo MVI -MVI parte con l'evento declip e termina con l'evento clip.
+\subsection{Definizioni e assiomi}
+\textbf{REC}\\
+REC è una specifica SCIFF
+\begin{center}
+$\langle KB_{REC},\{\textbf{H}/2,\textbf{EN}/2,\textbf{H}/2,\textbf{mvi}/2\},IC_{REC}\rangle$
+\end{center}
+dove:
+\begin{itemize}
+ \item \textit{$KB_{REC}=\{ax_1,ax_7\}\cup KB_{domain}$};
+ \item \textit{$IC_{REC}=\{ax_2,ax_3,ax_4,ax_5,ax_6\}$}.
+\end{itemize}
+Gli assiomi $ax_1$ e $ax_7$ sono regole backward (clausole), mentre gli assiomi da $ax_2$ ad $ax_6$ sono delle implicazioni forward (ICs). Questo schema rispecchia quello dell'ALP e rappresenta la base del comportamento reattivo di REC.
+\newpage
+\textbf{Assioma $ax_1$}\\
+Un fluente F è vero al tempo T, se un MVI contenente T è stato costruito per F.
+\begin{center}
+$holds\_at(F,T)\leftarrow \textbf{mvi}(F,[T_s,T_e])\wedge T>T_s\wedge T\leq T_e$
+\end{center}
+\textbf{Assioma $ax_2$}\\
+Se $(T_s,T_e]$ è un intervallo MVI per F, allora F dev'essere attivato al tempo $T_s$ e interrotto al tempo $T_e$.
+\begin{center}
+$\textbf{mvi}(F,[T_s,T_e])\rightarrow \textbf{E}(declip(F),T_s)\wedge \textbf{E}(clip(F),T_e)\wedge \textbf{EN}(declip(F),T_d)\wedge$\\$ T_d>T_e\wedge T_d\leq T_e\wedge \textbf{EN}(clip(F),T_c)\wedge T_c\geq T_s\wedge T_c<T_e$
+\end{center}
+\textbf{Assioma $ax_3$}\\
+Se un fluente viene inizializzato, quest'azione corrisponde all'evento \textit{declip} generato al tempo 0.
+\begin{center}
+$initially(F)\rightarrow \textbf{H}(declip(F),0)$
+\end{center}
+\textbf{Assioma $ax_4$}\\
+Se un evento \textit{Ev} si verifica al tempo T e attiva un fluente F, o F è già vero oppure viene attivato.
+\begin{center}
+$\textbf{H}(event(Ev),T)\wedge initiates(Ev,F,T)\rightarrow \textbf{H}(declip(F),T)\vee \textbf{E}(declip(F),T_d)\wedge T_d<T\wedge \textbf{EN}(clip(F),T_c)\wedge T_c>T_d\wedge T_c<T$
+\end{center}
+\textbf{Assioma $ax_5$}\\
+Il verificarsi di un evento declip(F) determina l'inizio di un nuovo MVI per F, questo inizia dal momento in cui si verifica l'evento e terminerà in futuro.
+\begin{center}
+$\textbf{H}(declip(F),T_s)\rightarrow \textbf{mvi}(F,[T_s,T_e])\wedge T_e>T_s$
+\end{center}
+\textbf{Assioma $ax_6$}\\
+Se un evento \textit{Ev} arriva e fa terminare il fluente F, F viene interrotto.
+\begin{center}
+$\textbf{H}(event(Ev),T)\wedge terminates(Ev,F,T)\rightarrow \textbf{H}(clip(F),T)$
+\end{center}
+\textbf{Assioma $ax_7$}\\
+Tutti i fluenti terminano quando arriva un evento speciale \textit{complete}.
+\begin{center}
+\textit{terminates(complete,F,\_)}
+\end{center}
+\newpage
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[scale=0.6]{./grafoAssiomi}
+        \caption{Grafo delle dipendenze che mostra il mapping dei vincoli tra i letterali contenuti nel assiomatizzazione di REC}
+        \label{grafo}
+    \end{center}
+\end{figure}
+Al termine dell'esecuzione dell'assioma $ax_7$, tutti i fluenti sono terminati; il tempo T, nel quale arriva l'evento \textit{complete}, fissa il limite superiore di ogni intervallo MVIs.
+Come detto in precedenza, REC si ispira al lavoro di Chittaro e Montanari sul CEC. La differenza principale è che, mentre il ragionamento CEC è fornito da un motore Prolog che gestisce MVI, REC si basa sulla procedura SCIFF, che supporta il ragionamento reattivo ed è completamente dichiarativo.\\Nella Figura 4.5 viene riassunto il confronto tra i due approcci.
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[scale=0.5]{./CECvsREC}
+    \caption{Confronto tra CEC e REC}
+    \label{CEC-REC}
+\end{center}
+\end{figure}
+\newpage
+\subsection{Monitoraggio REC}
+Tramite il seguente caso di studio \cite{rif4}, viene illustrato come funziona il monitoraggio del sistema effettuato da REC.\\
+Una società vuole monitorare le schede personali dei suoi dipendenti, ognuno di essi utilizza la macchina timbratrice che registra quando entrano ed escono dall'ufficio.\\
+Il sistema riconosce due eventi:
+\begin{itemize}
+ \item \textit{check\_in(E)}: dipendente E è entrato:
+ \item \textit{check\_out(E)}: dipendente E è uscito.
+\end{itemize}
+Di seguito viene riportato il comportamento che un dipendente deve seguire:
+\begin{itemize}
+ \item[\textbf{(R1)}] dopo l'evento check\_in, il dipendente deve far scattare l'evento di check\_out dopo 8 ore;
+ \item[\textbf{(R2)}] non appena viene rilevata una scadenza, un apposito allarme sulla scrivania dell'operatore la segnala. Si segnala l'ID del dipendente e l'intervallo di tempo trascorso. L'allarme viene disattivato quando l'operatore decide di gestire l'evento.
+\end{itemize}
+Si assumono le seguenti azioni che l'operatore può decidere di intraprendere:
+\begin{itemize}
+ \item \textit{handle(E)}: l'operatore gestisce la situazione identificando il dipendente tramite E;
+ \item \textit{tic}: è utilizzato per avere una panoramica sulla situazione corrente del sistema.
+\end{itemize}
+Per catturare i requisiti (R1) ed (R2), vengono utilizzati tre fluenti:
+\begin{itemize}
+ \item \textit{in(E)}: E si trova in ufficio;
+ \item \textit{$should\_leave(E,T_d)$}: E dovrebbe lasciare l'ufficio al tempo $T_d$;
+ \item \textit{alarm(E,delay(D))}: E non ha lasciato l'ufficio in tempo - D rappresenta la differenza tra il tempo di rilevazione della scadenza del termine e il tempo di scadenza stessa. In generale, il fluente \textit{allarm(E,A)} afferma che l'allarme A è attivo per E.
+\end{itemize}
+È possibile modellare tali requisiti in modo dichiarativo utilizzando i predicati precedentemente definiti.
+\newpage
+Per quanto riguarda il requisito \textit{in(E)}
+\begin{center}
+\textit{initiates(check\_in(E),in(E),T)}.\\
+\textit{terminates(check\_out(E),in(E),T)}.
+\end{center}
+Quando si verifica E (ossia un impiegato E timbra l'entrata) al tempo $T_c$, viene attivato il fluente \textit{should\_leave}, esprimendo che E deve lasciare l'ufficio al tempo $T_c$+8
+\begin{center}
+$initiates(check\_in(E),should\_leave(E,T_d),T_c)\leftarrow T_d\ is\ T_c+8$
+\end{center}
+Questo fluente può terminare in due modi: o termina entro le 8 ore, o alla scadenza del termine. In quest'ultimo caso, la terminazione è imposta dalla prossima azione \textit{tic}
+\begin{center}
+$terminates(check\_out(E),should\_leave(E,T_d),T_c)\leftarrow holds\_at(should\_leave(E,T_d),T_c)\wedge T_c\leq T_d$
+\end{center}
+\begin{center}
+$terminates(tic,should\_leave(E,T_d),T)\leftarrow holds\_at(should\_leave(E,T_d),T)\wedge T>T_d$
+\end{center}
+La stessa azione \textit{tic} provoca anche un allarme quando il dipendente esce:
+\begin{center}
+$initiates(tic,allarm(E,delay(D)),T)\leftarrow holds\_at(should\_leave(E,T_d),T)\wedge T>T_d\wedge D\ is\ T-T_d$
+\end{center}
+Infine, ogni allarme relativo a un dipendente viene disattivato quando l'operatore lo gestisce
+\begin{center}
+\textit{terminates(handle(E),alarm(E,A),T)}
+\end{center}
+Sulla base di tale teoria, REC diventa in grado di ragionare in modo dinamico controllando il flusso dei dipendenti all'interno dell'azienda. In particolare, REC tiene traccia dello stato di ciascun dipendente, e genera un allarme non appena un'azione \textit{tic} rileva una scadenza del termine. Come abbiamo visto, gli allarmi sono rappresentati da specifici fluenti, attivati da SCIFF quando si incontra la corrispondente situazione.
+\newpage
+Consideriamo una traccia di esecuzione che coinvolge due dipendenti e1 ed e2, dove e2 rispetta il termine previsto, mentre e1 no\\
+\\\textbf{H}(event(check\_in(e1)),9),\ \ \   \textbf{H}(event(tic),10),\ \ \  \textbf{H}(event(check\_in(e2)),11),\\
+\textbf{H}(event(tic),14),\ \ \ \ \ \ \ \ \ \  \ \ \ \ \textbf{H}(event(tic),16),\ \ \  \textbf{H}(event(tic),18).
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[scale=0.75]{./esempioREC}
+    \caption{Traccia dei fluenti in REC}
+    \label{REC}
+\end{center}
+\end{figure}
+\\REC genera un allarme per quanto riguarda il dipendente e1, che non ha lasciato l'ufficio entro le 17; l'esecuzione procede quindi nel seguente modo:
+\begin{center}
+\textbf{H}(event(check\_out(e2)),19),\ \ \ \ \ \textbf{H}(event(handle(e1)),22)\\
+\textbf{H}(event(check\_out(e1)),23),\ \ \ \ \ \textbf{H}(event(complete),32).
+\end{center}
+e2 lascia correttamente l'ufficio alla scadenza. Al tempo 22 l'operatore gestisce l'allarme che coinvolge e1, che alla fine lascia il suo ufficio al tempo 23.
+\chapter{Diagnosi di violazioni di commitment}
+\section{Introduzione}
+Come abbiamo visto nel capitolo 2, un \textit{social commitment} è un modo per rappresentare i contratti che si instaurano tra gli agenti, questi sono formati da un agente debitore verso un agente creditore che si impegna a soddisfare una proprietà; agli impegni vengono generalmente associati dei tempi, entro i quali bisogna soddisfarli, se così non fosse si verifica una violazione, che fa scattare un'eccezione per l'agente creditore.\\
+Al fine di evitare una violazione di un commitment, gli agenti del sistema dovrebbero potersi controllare a vicenda tra di loro, il problema sta nel fatto che non è possibile prevedere il comportamento degli agenti in un sistema multiagente. Inoltre, l'ambiente può anche essere imprevedibile e causare una mancata corrispondenza tra gli eventi, si ha quindi bisogno di monitorare e gestire le eccezioni al fine di garantire la gestione dei commitment in sicurezza.\\
+\\\textit{Esempio.Cliente, banca, negozio e il suo corriere: acquisto online di un libro.}\\
+Si consideri uno scenario \cite{rif5} con un cliente, Federico, che desidera aquistare una copia del libro di Harry Potter (HP7), da un negozio online (Amazon). La transazione ha bisogno di altre due figure: la banca (HSBC) per il pagamento, e il corriere (UPS) per la consegna del libro a Federico.\\
+Il processo ha inizio con il pagamento del libro HP7 da parte di Federico, alla banca HSBC il Lunedì. Il commitment tra Federico e Amazon afferma che HP7 sarà consegnato in cinque giorni lavorativi a partire dal momento in cui HSBC verifica il pagamento di Federico. Si assume che la verifica arriverà il Mercoledì. Ma cosa succede se HSBC non notifica ad Amazon la verifica del pagamento di Federico fino a Venerdì?.
+\\Quando Federico non riceve HP7 il giorno stabilito (ossia entro Mercoledì della settimana successiva), entra in contatto con Amazon per chiedere il motivo del ritardo. Amazon dice a Federico che ci sono ancora due giorni di tempo prima della scadenza. A questo punto, Federico capisce che c'è una mancata corrispondenza tra le loro copie di commitment e si deve decidere cosa fare. Una possibilità è di allineare il suo contratto con quello di Amazon, cambiando il suo termine.\\
+Questo può essere visto come un disallineamento (\textbf{misalignment}) tra commitment, causato dalle differenze tra le osservazioni del debitore e creditore. Un'altra causa di violazione può essere dovuta al cattivo comportamento (\textbf{misbehavior}) del debitore, ad esempio, Amazon delega il suo impegno a UPS, dando però un termine sbagliato.\\
+Quando l'agente creditore rileva che uno dei suoi commitment viene violato, avvia il processo di diagnosi mediante una richiesta di diagnosi al debitore. Nell'esempio, Federico fa una richiesta di diagnosi ad Amazon per il suo commitment violato. Il processo di diagnosi può coinvolgere più di due agenti, per esempio, Amazon potrebbe aver delegato il suo impegno a UPS.\\
+Una richiesta di diagnosi quindi fa scattare il processo che porta ad uno dei seguenti risultati:
+\begin{itemize}
+ \item quando viene riscontrato un \textit{misalignment}, si cerca di riallineare i commitment coinvolti;
+ \item quando viene riscontrato un \textit{misbehavior}, viene identificato l'agente \virgolette{colpevole}.
+\end{itemize}
+La diagnosi viene quindi fatta partire quando si osserva una deviazione del comportamento che ci si aspetta dal sistema; in un sistema multiagente viene fatta partire da un agente, che rileva un'eccezione nel sistema, e interagisce con altri agenti per isolare il problema nel proprio comportamento o nel comportamento di altri agenti.
+\newpage
+\section{Processo di diagnosi}
+Lo scopo del processo di diagnosi è quello di indagare sullo stato dei commitment del sistema e restituire una \textit{possibile} causa della loro violazione, che si tratti di un \textit{misalignment} o un \textit{misbehavior}.\\
+Sia \textit{C} l'insieme di tutti i commitment e \textit{A} l'insieme di tutti gli agenti nel sistema. Quando un processo di diagnosi viene avviato da un agente $a\in A$, siamo interessati a identificare la causa di violazione di uno specifico commitment C $\in C$. Indichiamo con $C_A \subseteq C$ la serie di commitment di A di cui è a conoscenza, ossia $\forall$ C : C $\in C_A \Rightarrow$ C $\in C$.
+La definizione che troviamo sotto definisce formalmente il concetto di diagnosi. Un processo di diagnosi parte da un commitment C che viene violato, e mira a identificare il motivo che c'è dietro a tale violazione, o come un \textit{misalignment} tra C e un commitment rilevato c, o come un \textit{misbehavior} del debitore x di un commitment rilevato. Il risultato di tale processo è quello che chiamiamo \textbf{diagnosi} \cite{rif5}.\\
+\\\textbf{Definizione} Dato un insieme di agenti \textit{A}, un agente A $\in A$, un commitment violato C $\in C_A$, chiamiamo \textit{diagnosi} di C da parte di A, un atomo $\delta \in \{misalignment(c),misbehavior(x)\}$, per ogni $c \in C \cup \{\emptyset \}$, oppure $x \in A$.
+\\Per indicare che un atomo $\delta$ rappresenta una diagnosi, si scrive $A \models^{d(C)} \delta$.
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[scale=0.55]{./DefDiagnosi}
+        \caption{Stati dei commitment}
+        \label{CEC-REC}
+    \end{center}
+\end{figure}
+\\- $C^C_A \subseteq C$ è l'insieme di tutti e soli i commitment che sono rilevanti per C, ossia che devono soddisfare la stessa proprietà \textit{p};
+\\- a $C^{CX}_A$ appartengono tutti i membri di $C^C_A$ che sono una delegazione di C, ossia quando viene passato ad un altro agente il compito di soddisfare C;
+\\- a $C^{Cf}_A$ appartengono tutti i forward-shift di C, ossia i commitment che hanno la stessa proprietà \textit{p} di C ma con l'intervallo di tempo posticipato.
+\\- a $C^{CfX}_A$ appartegono tutti i forward-shift delegati di C.
+\newpage
+I due possibili esiti di una corretta diagnosi sono:
+\begin{enumerate}
+    \item \textit{Misalignment}: ci si può trovare in una delle seguenti condizioni:
+    \begin{enumerate}
+        \item è presente un commitment C, il creditore crea il commitment mentre il suo debitore no;
+        \item il commitment C viene violato, ma per il suo debitore è ancora attivo.
+    \end{enumerate}
+    Nel caso (a) le tracce del debitore e creditore sono disallineate, in particolare il debitore non crea il commitment del creditore, perché non ha l'evento nella sua traccia.\\
+    Nel caso (b) invece il debitore crea la sua copia del commitment ma con una scadenza diversa (posticipata), rispetto a quella del creditore.
+    \item \textit{Misbehavior}: ci si può trovare in una delle seguenti condizioni:
+    \begin{enumerate}
+        \item si ha un commitment violato, il debitore non ha delegato il commitment ad un terzo agente, oppure
+        \item il debitore ha delegato il commitment, non rispettando però le scadenze.
+    \end{enumerate}
+    Nel caso (a), il debitore deduce che il commitment è stato violato. Dal momento che lui non ha delegato il commitment a un altro agente, ha la piena responsabilità sulla violazione.\\
+    Nel caso (b), il debitore non ha violato il commitment in quanto lo ha delegato ad un altro agente. Tuttavia, è ancora responsabile della violazione in quanto la scadenza del commitment viene spostata durante la delega.
+\end{enumerate}
+\newpage
+La seguente definizione descrive come avviene una diagnosi corretta, tenendo conto dei due casi spiegati sopra.\\
+\\\textbf{Definizione} Una \textit{diagnosi corretta} per C $\in C_A$ da parte di A $\in A$ è un $\delta$ del tipo $A\models^{d(C)} \delta$ e:
+\begin{enumerate}
+    \item (a) se $\delta=misalignment(\emptyset)$, allora\\
+    $\exists x,y\in A, c=violated(c(x,y,property(e(t_1,t_2),p)))\in C^{C}_{A}$ dove
+    \begin{enumerate}
+        \item[-] c $\in C_y$ (c è noto al suo creditore y) e
+        \item[-] $C^{C}_{x}=\emptyset$ (c non è noto al suo debitore x);
+    \end{enumerate}
+    (b) se $\delta=misalignment(c)$, c $\in C$, allora\\
+    $\exists x,y\in A, c=violated(c(x,y,property(e(t_1,t_2),p))),\\
+    c'=s(c(x,y,property(e(t_3,t_4),p)))\in C^{C}_{A}$, dove
+    \begin{enumerate}
+        \item[-] s $\in \{active,fulfilled\}$,
+        \item[-] c $\in C_y$ (c è noto come attivo o soddisfatto dal suo creditore y),
+        \item[-] c' $\in C_x$ (il debitore x, considera il commitment violato) e
+        \item[-] c' è il commitment c con la scadenza posticipata.
+    \end{enumerate}
+    \item se $\delta=misbehavior(x)$, allora\\
+    $\exists x,y\in A, c=violated(c(x,y,property(e(t_1,t_2),p)))\in C^{C}_{A}$ dove
+    \begin{enumerate}
+        \item[-] c $\in C_x\cap C_y$ (sia il debitore che il creditore sanno che c è stato violato) quindi
+        \begin{enumerate}[(a)]
+            \item $C^{cY}_{x}=\emptyset\ \ \forall\ Y \in A$ (il debitore x non ha delegato il commitment a nessuno) oppure
+            \item $C^{cfY}_{x} \cup C^{ceY}_{x}\ne \emptyset$ per qualche Y $\in A$ (x ha delegato c dando una scadenza sbagliata).
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+Questa definizione descrive la diagnosi, cercando la causa in tutto il sistema multiagente, vale a dire, prendendo in considerazione tutti i commitment e gli agenti.
+\newpage
+\section{Teoria Model-Based applicata alla diagnosi di commitment}
+Come anticipato nel capitolo 3 - \textbf{Diagnosis Model-Based}, il nostro lavoro si appoggia su una variante della Diagnosis Model-Based, quella \textbf{Abduttiva}. Questa sostiene che tramite la diagnosi $\Delta$, la sua descrizione \textit{SD} e l'input \{\textit{in}\} dato, si può derivare l'output \{\textit{out}\} osservato:
+\begin{center}
+    $\Delta\cup SD\cup \{in\}\models \{out\}$
+\end{center}
+Vediamo di seguito se il nostro sistema segue questa MBD \virgolette{Abduttiva}.\\
+\\\textbf{Diagnosi}\\
+Nella definizione dichiarativa di \virgolette{diagnosi corretta} (presa dall'articolo\\\cite{rif5}), è stato spiegato che da un processo di diagnosi si può ottenere uno dei seguenti risultati (indicato con $\delta$):
+\begin{itemize}
+    \item $\delta = misalignment(c)$ dove c è il commitment violato;
+    \item $\delta = misbehavior(x)$ dove x è l'agente che non ha soddisfatto le condizioni dettate dal commitment.
+\end{itemize}
+Il processo di diagnosi parte quando si vede che lo stato di un commitment C passa da \textit{active} a  \textit{violated} e vengono, di conseguenza, considerati gli stati dei commitment legati (\virgolette{relevant} \cite{rif5}) ad esso.\\
+Tutti questi dati sono osservabili e si può utilizzare la seguente formula per caratterizzare una \virgolette{diagnosi corretta}:
+\begin{center}
+    $OBS\cup TH_{OBS}\models \delta$
+\end{center}
+dove:
+\begin{itemize}
+    \item OBS contiene tutti i fatti noti (tra cui gli stati dei commitment) agli agenti, che si possono vedere nei loro output,
+    \item TH$_{OBS}$ è la teoria sulle osservazioni data nella definizione \virgolette{diagnosi corretta} [sezione precedente 5.2].
+\end{itemize}
+Le OBS possono essere ricavate tramite le tracce TR delle azioni eseguite dagli agenti (costruite durante l'esecuzione del sistema) e dai modelli della logica del protocollo [paragrafo 2.1], che indichiamo con TH$_{IP}$ (essi corrispondono ai file model$\langle Agent\rangle$.txt nella nostra implementazione REC, dei quali si parlerà nel prossimo capitolo).
+\newpage
+Si può quindi scrivere il tutto tramite la formula
+\begin{center}
+    $TR\cup TH_{IP}\models OBS$
+\end{center}
+Nel presente lavoro, si è aggiunta un'altra componente alla nostra conoscenza, che corrisponde ai processi locali [paragrafo 2.1] degli agenti (nell'implementazione REC sono indicati con il nome behavior$\langle Agent\rangle$.txt; verranno anch'essi presentati nel prossimo capitolo). Ci riferiremo a questa componente con la notazione TH$_{BEH}$; detto ciò si può scrivere
+\begin{center}
+    $TH_{IP}\cup TH_{BEH}\cup \{in\}\cup \delta \models OBS$
+\end{center}
+dove \{\textit{in}\} indica l'evento di input che dà inizio al processo e $\delta$ la diagnosi.\\
+Questo modello, così presentato segue il modello della MBD, che permette di fare delle inferenze del tipo
+\begin{center}
+    $cause\models effetti$
+\end{center}
+ovvero dalle cause (inclusa la diagnosi $\delta$) si derivano gli effetti (le osservazioni OBS).\\
+Nella tesi però non è stato utilizzato questo modello \virgolette{in avanti} per calcolare la diagnosi, avendo \virgolette{ereditato} l'implementazione del processo di diagnosi da \cite{rif5}.\\
+Abbiamo però utilizzato questo modello \virgolette{in avanti} per generare automaticamente le tracce degli eventi degli agenti, a partire da un singolo evento dato in input e da una diagnosi
+\begin{center}
+    $TH_{IP}\cup TH_{BEH}\cup \{in\}\cup \{\delta\}\models TR$
+\end{center}
+data quindi la diagnosi decisa da noi e i modelli, si possono derivare le tracce degli agenti.\\
+Occorre dire che la \virgolette{diagnosi decisa da noi} non è della forma:
+\begin{itemize}
+    \item $\delta = misalignment(c)$ dove c è il commitment violato,
+    \item $\delta = misbehavior(x)$ dove x è l'agente che non ha soddisfatto le condizioni dettate dal commitment;
+\end{itemize}
+ma viene specificata tramite modi comportamentali degli agenti \virgolette{late1} e \virgolette{late2} che sappiamo corrispondere rispettivamente ai casi \textit{misalignment} e \textit{misbehavior}.
+\newpage
+Una conseguenza di tutto questo è che noi possiamo specificare diagnosi \textit{multiple-fault} (diversi agenti che non seguono un comportamento nominale) nelle nostre soluzioni.\\
+\\\textbf{Conclusioni}
+\\Dai fatti esposti in questo paragrafo si può dire che il nostro sistema non risulta seguire in modo preciso il modello Abduttivo della MBD, poichè mentre questa logica segue la formula
+\begin{center}
+    $\Delta\cup SD\cup \{in\}\models \{out\}$
+\end{center}
+la nostra segue invece la formula
+\begin{center}
+    $\underbrace{\{in\}\cup\{out\}}_{OBS}\cup\ TH\models \Delta$
+\end{center}
+ossia, dato l'evento in input \{in\} e l'insieme degli output \{out\} degli agenti, e un'opportuna teoria osservazionale TH possiamo derivare la nostra diagnosi $\delta$; si può però vedere che la prima formula è stata utilizzata per la simulazione del sistema, ossia per arrivare ad ottenere l'output con il risultato del processo di diagnosi ricercato.
+\\Per poter risolvere problemi diagnostici seguendo la logica MBD bisognerebbe rivedere l'algoritmo che viene implementato da \cite{rif5}.
+\\Qui si aprono problematiche da affrontare al di là di questi tesi.
+\newpage
+\chapter{Implementazione del Sistema Diagnostico in REC}
+\section{Obiettivo}
+L'obiettivo principale è stato quello di generare automaticamente una intera esecuzione di un protocollo di interazione tra gli agenti dando come input iniziale un evento, nel quale vengono coinvolti inizialmente solo due agenti del sistema, e il comportamento che ogni singolo agente, che prende parte all'interazione, dovrà seguire durante tutto il processo. Tramite il loro modello di protocollo, e un file di specifica del comportamento, scritto appositamente che verrà presentato in seguito, verranno coinvolti tutti gli agenti del sistema per arrivare all'obiettivo finale. Le tracce di ogni singolo agente vengono scritte durante l'esecuzione; viene inoltre creato un file di output per ognuno di essi, per poter vedere cos'è accaduto durante la loro esecuzione.
+\section{Architettura}
+Come si vede nella Figura 6.1, nell'architettura di questo sistema, ogni agente possiede una propria base di conoscenza, chiamata \textbf{modello}, dove vengono riportate le regole di protocollo che definiscono cosa fare quando arriva un evento (definiscono quindi un elenco di fatti che rappresentano il modello di impegno specifico da monitorare). Gli agenti sono collegati tra loro da una base di conoscenza (\textbf{metamodello}), dove vengono definite le regole di protocollo generali che devono valere per tutti, nello specifico contengono la formalizzazione del ciclo di vita che i commitment devono seguire.\\
+Le istanze attive che riguardano i commitment non sono memorizzate all'interno di queste basi, ma sono invece dedotte sulla base delle conoscenze esistenti in fase di esecuzione e su adeguate capacità di monitoraggio.
+\newpage
+Ogni agente controlla singolarmente lo stato dei propri commitment nel proprio ambito e tiene traccia degli eventi accaduti, in base a ciò che osserva.
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[scale=0.85]{./architetturaDiagnosi}
+    \caption{Architettura del sistema di diagnosi}
+    \label{diagnosi}
+\end{center}
+\end{figure}
+\newpage
+\subsection{Modello dei Dati}
+\textbf{File di input}
+\begin{figure}[h]
+    \includegraphics[scale=0.90]{./fileInput}
+\end{figure}
+\\In input viene dato l'evento che farà partire l'esecuzione del processo, in questo caso \texttt{pay(federico,hsbc,hp7)}; questo viene dato sia all'agente che, in questo caso, effettua il pagamento (federico) che all'agente che lo riceve (hsbc). I numeri interi 2 e 16 indicano rispettivamente il tempo di inizio e di fine dell'esecuzione del processo. Vengono elencati anche gli agenti coinvolti nel sistema, con il loro nome e la modalità di esecuzione che devono seguire; quest'ultimo paramentro viene utilizzato per far eseguire determinate azioni all'agente (vedere File Behavior p. 51) in modo da far scattare diagnosi diverse.\\
+\\\textbf{Metamodello}\\
+Questo file è scritto nel linguaggio REC e in esso viene riportato il ciclo di vita del commitment; in particolare viene descritto come avviene il passaggio da uno stato all'altro ($active \rightarrow fulfilled/violated$), le condizioni di inizializzazione e terminazione, la teoria che c'è dietro il processo di diagnosi, più altre proprietà che riguardano sempre la loro esecuzione; si trova inoltre l'algoritmo utilizzato per risolvere il problema di diagnosi.
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[scale=0.80]{./metaModel}
+        \caption{Esempi di alcune parti del metamodello}
+    \end{center}
+\end{figure}
+\newpage
+\textbf{Algoritmo di diagnosi}\\
+Come detto in precedenza l'algoritmo si trova nel metamodello (file condiviso tra tutti gli agenti del sistema); in esso vengono gestiti sei tipi di casi di diagnosi, i quali si escludono a vicenda. Nello specifico, il caso 1' esclude qualsiasi diagnosi, siccome non sono presenti commitment; i casi 2', 5' e 6' gestiscono i casi in cui sono presenti delle deleghe sui commitment (ossia quando un agente delega il compito di soddisfare un commitment ad un altro agente); i casi 3' e 4' quando invece non è presente alcuna delega.
+\begin{enumerate}
+    \item[-] Caso 1') non vengono rilevati commitment
+    \begin{figure}[h]
+        \includegraphics[scale=0.85]{./case1}
+    \end{figure}
+    \item[-] Casi 2') e 3') si occupano del misbehavior da parte dell'agente debitore
+    \begin{figure}[h]
+        \includegraphics[scale=0.85]{./case2}
+    \end{figure}
+    \begin{figure}[h]
+        \includegraphics[scale=0.85]{./case3}
+    \end{figure}
+    \newpage
+    \item[-] Casi 4') e 5') si occupano del misalignment
+    \begin{figure}[h]
+        \includegraphics[scale=0.85]{./case4}
+    \end{figure}
+    \begin{figure}[h]             
+        \includegraphics[scale=0.85]{./case5}
+    \end{figure}
+    \item[-] Caso 6') quando il commitment viene delegato ad un altro agente
+    \begin{figure}[h]
+        \includegraphics[scale=0.85]{./case6}
+    \end{figure}
+\end{enumerate}
+\newpage
+\textbf{Modello}\\
+Nella Figura 6.3, viene riportato il modello (protocollo) che l'agente Federico segue durante la sua esecuzione; ad esempio, quando si verifica l'evento\\
+\texttt{pay(federico,hsbc,hp7)}\\
+avviene l'inizializzazione del fluente \texttt{paid(hp7)} a true (come si vedrà nel suo file di output) e la creazione del commitment\\ \texttt{c(hsbc,federico,property(e(Ts,Te),verified(hp7)))}\\
+dove \texttt{Ts} corrisponde al tempo di creazione del commitment mentre \texttt{Te} è il tempo di scadenza.
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[scale=1.00]{./esempioModello}
+        \caption{Modello dell'agente Federico}
+        \label{modello}
+    \end{center}
+\end{figure}
+\newpage
+\textbf{File behavior}\\
+Questi file sono stati scritti per dire agli agenti le azioni che dovranno compiere quando arrivano determinati eventi, in modo da interagire tra di loro.\\
+Nella Figura 6.4 vengono riportate le azioni che l'agente Federico dovrà eseguire; tramite il file di input viene presa la modalità di esecuzione:
+\begin{itemize}
+    \item \textbf{ok}: gli agenti si comportano correttamente, arrivando al goal desiderato entro le tempistiche dettate dai commitment e senza far scattare processi di diagnosi;
+    \item \textbf{late}: tramite questa viene fatto scattare il processo di diagnosi; in base al numero di possibili diagnosi possono esserci diverse modalità \textit{late}.
+\end{itemize}
+Queste modalità vanno ad influenzare i tempi nei quali l'agente compirà le prossime azioni.\\
+Quando arriva un evento, viene catturato e manipolato nei modelli, e viene inizializzata la prossima azione, tramite la proposizione \texttt{nextact(\dots)}, che andrà a specificare, in base alla modalità di esecuzione, la prossima azione che sarà eseguita e in quale istante di tempo; ad esempio, all'evento \\\texttt{pay(federico,hsbc,hp7)} corrisponde l'azione successiva \\\texttt{verify(hsbc,hp7,Tver)}, dove Tver indica l'istante in cui l'evento di verify arriverà all'agente HSBC; tramite questo evento di verifica, HSBC intraprenderà le due azioni \texttt{verify(federico,hp7,Tdel)} e \texttt{verify(amazon,hp7,Tdel)} (Figura 6.4).
+\newpage
+\begin{figure}[h]
+    \includegraphics[scale=0.90]{./fileBehaviorH}
+    \bigskip
+    \includegraphics[scale=0.90]{./fileBehaviorH2}
+    \caption{Un pezzo del file behavior dell'agente HSBC}
+\end{figure}
+\bigskip
+In questi file si trova anche la sintassi per effettuare la richiesta di diagnosi e ricevere il suo risultato, come si può vedere nelle ultime righe del file behavior di Federico, Figura 6.5; l'algoritmo utilizzato per il processo di diagnosi si trova nel \textit{metamodello} condiviso tra gli agenti.
+\begin{figure}[h]
+    \includegraphics[scale=0.85]{./modelloFederico}
+    \caption{Un pezzo del file behavior dell'agente Federico}
+\end{figure}
+\newpage
+\textbf{Traccia degli eventi}
+\begin{figure}[h]
+    \includegraphics[scale=0.85]{./eventTraceF}
+    \label{trace}
+\end{figure}
+\\In questo file vengono salvati tutti gli eventi che arrivano e che interessano l'agente menzionato in essi.\\
+Nella implementazione di \cite{rif5}, il software manipolava le tracce in modo che queste venissero
+date come input ad ogni singolo agente ed eseguite senza portare ad alcuna
+interazione tra gli agenti coinvolti, ora queste vengono costruite durante l'esecuzione del processo.\\
+Gli eventi, ad esclusione di quello dato in input, vengono dedotti dal file chiamato \textit{behavior}, che viene costruito appositamente per ogni agente.\\
+\\\textbf{Output}\\
+Per ogni agente viene scritto un file di ouput, dal quale si potrà prendere visione di tutto quello che si è verificato durante il processo,  di tutte le decisioni prese e, nel caso si fosse verificata una violazione,
+si vedrà la richiesta di diagnosi con il relativo risultato.\\
+Ognuna di queste informazioni è accompagnata dallo stato in cui si trovano in ogni istante.
+\newpage
+Nella Figura 6.6 viene riportato un pezzo dell'output dell'agente Federico; qui possiamo vedere che il commitment\\\texttt{c(amazon,federico,property(e(5,10),delivered(hp7)))}\\è stato violato e che Federico ha avviato il processo di diagnosi al tempo 12 con la conseguente risposta da parte di amazon, nella quale comunica che c'è stato un \textit{misalignment}.
+\begin{figure}[h]
+    \includegraphics[scale=0.95]{./esOutput}
+    \caption{Pezzo di output dell'agente Federico.}
+    \label{output}
+\end{figure}
+\newpage
+\subsection{Implementazione}
+Sono stati presi i file sorgenti del progetto jREC.\\
+JREC è uno strumento JAVA + Prolog-based utilizzato per ragionare sulle dinamiche di un sistema basato sugli eventi. Nello specifico, jREC acquisisce dinamicamente le occorrenze degli eventi che caratterizzano una esecuzione del sistema e controlla gli effetti aggiornando l'evoluzione dei fluenti corrispondenti. JREC si basa sul Cache Event Calculus di Montanari e Chittaro \cite{rif9}, che cattura una forma di ragionamento in cui gli intervalli di validità massimi dei fluenti attuali vengono memorizzati nella cache e quindi aggiornati/modificati come nuovi quando arrivano degli eventi. In questo modo, si evita di ripartire da zero ogni volta che un nuovo evento si verifica ottenendo un'esecuzione del sistema efficiente.\\
+\'E stato scritto un nuovo main, di nome \\\texttt{TuPrologEngineTesterInteraction.java} nel  package\\\texttt{it.unibo.ai.rec.engine.tuprolog}\\ \\
+\begin{minipage}{.50\textwidth}
+    \includegraphics[scale=0.90]{./main}
+\end{minipage}
+\\ \\ \\Il software parte con la lettura del file di input, contenente il primo evento e gli agenti che verrano coinvolti. Ad ognuno di essi viene associato un thread e fatto partire.
+\newpage
+\'E stata sviluppata la parte contenuta nel package \texttt{it.unibo.ai.rec}.\\
+\\
+\begin{minipage}{.50\textwidth}
+\includegraphics[scale=0.90]{./package}
+\end{minipage}
+\begin{minipage}{.50\textwidth}
+    Questo codice lavora sul comportamento che gli agenti devono seguire per interagire l'uno con l'altro; la struttura del ciclo di vita che seguono viene riportato nelle classe \texttt{behaviorAgent.java}, Figura 6.7.\\
+    Nella classe \texttt{AgentRun.java} vengono sviluppati i metodi della classe precedentemente menzionata:
+    \begin{itemize}
+        \item \textbf{setup()}: vengono lette le basi di conoscenze (metamodello e modello) più il file contenente il comportamento (behavior) da seguire;
+        \item \textbf{action()}: viene gestito l'arrivo dell'evento;
+        \item \textbf{dispose()}: vengono salvati i contenuti e chiusi i file di output e della traccia degli eventi.
+    \end{itemize}
+\end{minipage}\\ \\ \\
+Nel metodo \textit{action()} l'agente si mette in attesa di un evento; quando questo arriverà, verrà aggiornata la base di conoscenza dell'agente stesso. Tramite la traccia dei fluenti (che corrisponde all'output che avremo a fine iterazione), si andranno a leggere le prossime azioni che l'agente dovrà intraprendere per portare avanti il processo; questa operazione viene implementata nella classe \texttt{Action.java}. Contemporaneamente a tutto questo, verrà aggiornata la traccia degli eventi dell'agente coinvolto.\\
+L'attesa degli eventi e l'aggiornamento della traccia degli eventi avvengono nella classe \texttt{Event.java}.\\
+All'interno della classe \texttt{Diagnosis.java} vengono monitorati gli stati dei commitment e, se si rileva una loro violazione, viene creata la richiesta di diagnosi da mandare al corrispondente agente debitore.
+\newpage
+\begin{figure}[h]
+    \includegraphics[scale=0.90]{./behaviorA}
+    \caption{Classe behaviorAgent.java}
+    \label{output}
+\end{figure}
+\newpage
+\section{Conclusioni}
+La parte di codice gestisce l'arrivo degli eventi e si occupa di tenere aggiornati i file di Output e le tracce degli eventi di ogni agente.\\
+La parte più complessa è stata la scrittura e la lettura delle azioni che gli agenti devono intraprendere quando gli arriva un evento; la scrittura dei file riguardanti il loro comportamento e la cattura delle proposizioni \texttt{nextact(\dots)} nei loro fluenti da parte del codice Java, per poter costruire le tracce e mandare avanti il processo di esecuzione del sistema.\\
+Al termine dello stage è stata quindi aggiunta alla piattaforma jREC questa parte, che permette l'interazione tra gli agenti, con lo scopo di far partire i processi di diagnosi sotto esplicita richiesta da parte loro; sono stati studiati i casi di \textit{misalignment} e \textit{misbehavior} e si è riusciti ad ottenere i risultati che si aspettavano a inizio lavoro.
+\chapter{Casi studio}
+\section{Introduzione}
+Di seguito vengono presentati due casi di studio.\\
+Il primo riprende l'esempio menzionato del capitolo 5, che vede come agenti: il cliente Federico, la banca HSBC, il negozio AMAZON e il corriere UPS\\\cite{rif5}.\\
+Nel secondo invece vedremo come agenti partecipanti: un cliente, un'assicuratore, un meccanico e un perito \cite{rif6}.
+\section{Esecuzione del primo esempio}
+\begin{figure}[h]
+    \includegraphics[scale=0.55]{./diagrammaEsempio1}
+    \caption{Processo dell'esempio 1}
+    \label{diagramma1}
+\end{figure}
+\newpage
+\subsection{Caso I: Misalignment}
+Tramite il seguente input
+\begin{figure}[h]
+    \includegraphics[scale=0.90]{./inputMA}
+\end{figure}
+\\vengono costruite le seguenti tracce
+\begin{figure}[h]
+    \includegraphics[scale=0.90]{./traceFederico}
+    \caption{Traccia dell'agente Federico}
+    \bigskip
+    \includegraphics[scale=0.90]{./traceHsbc}
+    \caption{Traccia dell'agente HSBC}
+    \bigskip
+    \includegraphics[scale=0.90]{./traceAmazon}
+    \caption{Traccia dell'agente Amazon}
+    \bigskip
+    \includegraphics[scale=0.90]{./traceUps}
+    \caption{Traccia dell'agente UPS}
+\end{figure}
+\newpage
+La banca HSBC manda la notifica di \textit{verify} in tempi diversi a Federico e ad Amazon (come si può vedere nelle tracce di questi due agenti), di conseguenza Federico crea il suo commitment con le tempistiche seguenti\\\texttt{$c_1$ = active (c(amazon,federico,property(e(5,10),delivered(hp7))))}, mentre Amazon\\\texttt{$c_2$ = active (c(amazon,federico,property(e(6,11),delivered(hp7))))}.\\
+Due giorni dopo, Amazon e UPS creano la loro copia di commitment\\\texttt{$c_3$ = active(c(ups,amazon,property(e(8,11),delivered(hp7))))}.\\
+Federico fa scattare il processo di diagnosi mandando una richiesta ad Amazon, riferita al commitment $c_1$ che è stato violato, 
+\begin{center}
+    \textit{$amazon \stackrel{d(c_1)}{\models}_{\emptyset} \delta$}
+\end{center}
+ed egli gli risponde che c'è stato un \texttt{misalignment} tra la loro copia di commitment
+\begin{center}
+    \textit{$\delta = misalignment(c)$}
+\end{center}
+\subsection{Case II: Misbehavior}
+Tramite il seguente input invece
+\begin{figure}[h]
+    \includegraphics[scale=1.00]{./inputMB}
+\end{figure}
+\\si ottengono le seguenti tracce
+\begin{figure}[h]
+    \includegraphics[scale=0.90]{./traceFedericoMB}
+    \caption{Traccia dell'agente Federico}
+\end{figure}
+\begin{figure}[h]
+    \includegraphics[scale=0.90]{./traceHsbcMB}
+    \caption{Traccia dell'agente HSBC}
+    \bigskip
+    \includegraphics[scale=0.90]{./traceAmazonMB}
+    \caption{Traccia dell'agente Amazon}
+    \bigskip
+    \includegraphics[scale=0.90]{./traceUpsMB}
+    \caption{Traccia dell'agente UPS}
+\end{figure}
+\newpage
+Federico effettua il pagamento, tramite la banca HSBC, per pagare il libro HP7 ad Amazon. HSBC manda la verifica dell'avvenuto pagamento sia a Federico che ad Amazon; a questo punto i due agenti creano la loro copia di commitment \\\texttt{$c_1$=active(c(amazon,federico,property(e(4,9),delivered(hp7))))};\\ anche Amazon e UPS, il giorno dopo, creano la loro copia di commiment\\ \texttt{$c_2$= active(c(ups,amazon,property(e(5,8),delivered(hp7))))}\\affidando così la consegna del libro a UPS.\\
+Come nel caso precedente, Federico vede violato il suo commitment e manda una richiesta di diagnosi ad Amazon
+\begin{center}
+    \textit{$amazon\stackrel{d(c_1)}{\models}_{\emptyset} \delta$}
+\end{center}
+\newpage
+Quest'ultimo vede che, oltre alla violazione del suo commitment con Federico, anche la delega verso UPS (che ha effettuato in modo corretto, rispettando i tempi di scandenza) è stata violata. A questo punto Amazon reindirizza la richiesta di diagnosi a UPS
+\begin{center}
+    \textit{$ups\stackrel{d(c_2)}{\models}_{(c_1)} \delta$}
+\end{center}
+UPS risulta quindi essere la causa della violazione e risponderà alla richiesta di diagnosi con
+\begin{center}
+    \textit{$\delta = misbehavior(ups)$}
+\end{center}
+Questa è la risposta data ad Amazon, Federico riceverà come diagnosi la \texttt{d\_req(\dots)} tra Amazon e UPS, come si può vedere nella sua traccia degli eventi (Figura 7.6).
+\newpage
+\section{Esecuzione del secondo esempio}
+\begin{figure}[h]
+    \includegraphics[scale=0.65]{./diagrammaEs2}
+    \caption{Processo dell'esempio 2}
+    \label{diagramma1}
+\end{figure}
+In questo esempio lo scenario risulta essere il seguente: il proprietario di un'automobile comunica all'agenzia assicuratrice di aver avuto un incidente e la porta a riparare da un meccanico. L'azienda controlla che il proprietario abbia pagato e che l'assicurazione sull'auto sia valida. Il meccanico accetta di riparare l'auto e contatta il perito per la valutazione dei danni. Dato che l'assicurazione è valida, il meccanico comincia a riparare l'auto, intanto il perito conferma la cifra dei danni e viene pagato, per il servizio svolto, dall'agenzia assicuratrice. Quando il meccanico finisce la riparazione, contatta l'assicurazione e con la sua approvazione consegna la macchina riparata al cliente. L'assicurazione paga poi il meccanico.\\
+In questo contesto verrano creati e manipolati i seguenti commitment:
+\begin{enumerate}
+    \item[-] \scalebox{0.90}{$C_1 = C(Insurer,Repairer,insurance\mathit{-}validated\wedge repaire\mathit{-}reported,$}\\
+    \scalebox{0.90}{$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assessmente\mathit{-}approved\wedge paymente\mathit{-}done, \emptyset, +7)$}
+    \item[-] \scalebox{0.90}{$C_2 = C(Insurer,Assessor, assessmente\mathit{-}done, assessmente\mathit{-}paid, \emptyset, +5)$}
+    \item[-] \scalebox{0.90}{$C_3 = C(Assessor,Repairer, damagee\mathit{-}reported\wedge insurancee\mathit{-}validated,$}\\
+    \scalebox{0.90}{$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assessmente\mathit{-}done, \emptyset, +2)$}
+    \item[-] \scalebox{0.90}{$C_4 = C(Repairer, Customer, insurancee\mathit{-}validated\wedge care\mathit{-}damaged,$}\\
+    \scalebox{0.90}{$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ car-repaired, \emptyset, +8)$}
+    \item[-] \scalebox{0.90}{$C_5 = C(Insurer, Customer, premiume\mathit{-}paid, insurancee\mathit{-}validated, \emptyset, +8)$}
+\end{enumerate}
+\newpage
+Questi commitment sono dei \textit{commitment condizionali}, dove le scadenze vengono specificate, per il conseguente, con la notazione + x per indicare X giorni dopo che l'antecedente diventa vero. $\emptyset$ indica l'assenza di una scadenza.\\
+Nello specifico, il loro significato è il seguente:
+\begin{enumerate}
+    \item[-] $C_1$: assicurazione/meccanico: se l'assicurazione è valida e la riparazione viene segnalata, l'assicurazione pagherà il perito e approverà la valutazione entro 7 giorni.
+    \item[-] $C_2$: assicurazione/perito: se la valutazione è stata fatta, il perito verrà pagato entro 5 giorni.
+    \item[-] $C_3$: perito/meccanico: se sono stati segnalati dei danni e l'assicurazione è valida, la valutazione dei danni sarà eseguita entro 2 giorni.
+    \item[-] $C_4$: meccanico/cliente: se l'assicurazione è valida e ci sono dei danni alla macchina, la macchina verrà riparata in 8 giorni.
+    \item[-] $C_5$: assicurazione/cliente: se l'assicurazione è stata pagata, l'assicurazione sarà convalidata entro 8 giorni.
+\end{enumerate}
+Siccome nel nostro metamodello, il caso dei commitment condizionali non viene sviluppato, è stata utilizzata la proposizione \textit{holds\_at(P,T)}, dove T indica l'istante di tempo nel quale il fluente P deve'essere vero, per poterli utilizzare.\\
+Si può vedere come avviene la creazione del commitment $n^{\circ}3$ nella Figura 7.11; in base al fluente che arriva prima viene creato il commitment:
+\begin{enumerate}
+    \item[Case 1)] se arriva prima il fluente che riguarda la validità dell'assicurazione e dopo quello che segnala dei danni alla macchina;
+    \item[Case 2)] se invece arriva prima il fluente che segnala la presenza di danni alla macchina e dopo la conferma di validità dell'assicurazione.
+\end{enumerate}
+\newpage
+\begin{figure}[h]
+    \includegraphics[scale=0.90]{./modelloAssessor}
+    \caption{Modello del perito}
+\end{figure}
+\newpage
+Come input viene dato il seguente evento, assieme ai nomi degli agenti e la loro modalità di esecuzione:
+\begin{figure}[h]
+    \includegraphics[scale=1.00]{./inputEs2}
+\end{figure}
+\\Con le modalità settate \virgolette{ok} l'esecuzione del sistema avviene senza alcuna violazione.
+\\Sono quindi state effettuate delle prove per far partire un processo di diagnosi da parte di uno degli agenti, andando sempre a scrivere i \textit{file behavior} di ogni agente e passandogli la modalità ok/late.
+\subsection{Esempio di Misalignment}
+Un esempio di \textit{misalignmnt} si può ottenere con il seguente input
+\begin{figure}[h]
+    \includegraphics[scale=1.00]{./input2MA}
+\end{figure}
+\\il commitment che viene violato è il $n^{\circ}5$\\
+\scalebox{0.90}{\texttt{c(insurer,customer,property(e(3,11),insuranceValidated(insurance)))}}\\
+il Customer manda la richiesta di diagnosi all' Insurer
+\begin{center}
+    \textit{$insurer\stackrel{d(c)}{\models}_{\emptyset} \delta$}
+\end{center}
+che risponde con un \textit{misalignment} tra la loro copia di commitment (Figura 7.12)
+\begin{center}
+    \textit{$\delta = misalignment(c)$}
+\end{center}
+\begin{figure}[h]
+    \includegraphics[scale=0.90]{./output2MA}
+    \caption{Traccia degli eventi del Customer}
+\end{figure}
+\newpage
+\subsection{Esempio di Misbehavior}
+Un caso di \textit{misbehavior} si può avere dando il seguente input
+\begin{figure}[h]
+    \includegraphics[scale=1.00]{./input2MB}
+\end{figure}
+\\in questo caso il commitment $n^{\circ}4$\\
+\scalebox{0.90}{\texttt{c(repairer,customer,property(e(6,14),carRepaired(car)))}}\\
+viene violato e il Customer manda la richiesta di diagnosi al Repairer
+\begin{center}
+    \textit{$repairer\stackrel{d(c)}{\models}_{\emptyset}\delta$}
+\end{center}
+egli gli risponde che c'è stato un \textit{misbehavior} da parte sua (Figura 7.13)
+\begin{center}
+    \textit{$\delta=misbehavior(repairer)$}
+\end{center}
+\begin{figure}[h]
+    \includegraphics[scale=0.90]{./output2MB}
+    \caption{Traccia degli eventi del Customer}
+\end{figure}
+\newpage
+\small
+\addcontentsline{toc}{chapter}{\bibname}
+\begin{thebibliography}{20}
+    \bibitem[Desai, Mallya, Chopra and Singh, 2005]{rif1} Interaction Protocols as Design Abstractions for Business Processes. \textit{North Caroline State University, USA}.
+    \bibitem[Singh, 1999]{rif2} An ontology for commitments in multiagent system. \textit{North Caroline State University, USA}. \textit{Artificial Intelligence and Low} 7: 97-113.
+    \bibitem[Reiter, 1987]{rif3} A Theory of Diagnosis from First Principles. \textit{University of Toronto, Canada. Artificial Intelligence}.
+    \bibitem[Chesani, Mello, Montali and Torroni, 2010]{rif4} A Logic-Based, Reactive Calculus of Events. \textit{University of Bologna, Italy}.
+    \bibitem[Kafali and Torroni, 2012]{rif5} \textit{Bogazici University, Istanbul, Turkey}, \textit{University of Bologna, Italy}. Exception diagnosis in multiagent contract executions.
+    \bibitem[Dastani, van der Torre and Yorke-Smith, 2013]{rif6} \textit{Utrecht University, Netherlands}, \textit{University of Luxembourg, Luxembourg}, \textit{American University of Beirut, Lebanon and University of Cambridge, United Kingdom}. Monitoring Interaction in Organisations.
+    \bibitem[Kowalski and Sergot, 1986]{rif7} A Logic-Based, Reactive Calculus of Events. \textit{New Generation Computing, 4(1), 67-95}.
+    \bibitem[Kowalski and Sandri, 1996]{rif8} Towards a Unified Agent Architecture that Combines Rationality with Reactivity.
+    \bibitem[Chittaro and Montanari, 1996]{rif9}  Efficient Temporal Reasoning in the Chaced Event Calculus, \textit{Computational Intelligence, 12}.
+    \bibitem[Fung and Kowalski, 1997]{rif10} The Iff Proof Procedure for Abductive Logic Programming.
+\end{thebibliography}
+\end{document}
